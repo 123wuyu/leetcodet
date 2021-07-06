@@ -31,7 +31,7 @@ def index():
 2. 加载配置文件。    app.config.from_pyfile('settings.py')
 不安全。
 3. 加载环境变量。    app.config.from_envvar('SET', silent=True)    silent=True，沉默，加载不到不报错
-使用相对复杂，但是更安全。一般用于存储?感信息和不对外公开的信息，比如密钥、签名等；
+使用相对复杂，但是更安全。一般用于存储敏感信息和不对外公开的信息，比如密钥、签名等；
 
 
 五、设置flask启动的环境变量？
@@ -157,13 +157,13 @@ def before_request():
     print("before request run")
 
 - 请求后执行
-  - after_request    1. 请求后执行  2. 需要接收响应对象为参数
+  - after_request    1. 请求后执行  2. 需要接收响应对象resp为参数
 @app.after_request
 def after_req(resp):
     print('after request run')
     return resp
 
-  - teardown_request    2.请求后执行，3. 需要接收异常信息e为参数
+  - teardown_request    1.请求后执行，2. 需要接收异常信息e为参数
 @app.teardown_request
 def teardown_req(e):
     print('teardown request run')
@@ -175,9 +175,9 @@ def teardown_req(e):
   - request：获取请求信息，比如获取查询字符串 request.args.get()；
   - session：操作用户会话信息，比如 设置session  session['key'] = value, 获取session  session.get('key')
 - 应用上下文app_context ：
-  - current_app：当前运行的flask app的代理，在代码不方便直接操作flask的app对象时，可以操作current_app。eg 避免循环导包。一般用来获取程序的各种配置信息、记录项目日志
-  - g：线程内的全局对象，用于请求过程中临时存储数据。实现了函数之间的数据传递。
-- 生命周期：current_app生命周期最长，request和g在请求后会被销毁，session根据会话的有效期决定
+  - current_app：当前运行的flask app的代理，在代码不方便直接操作flask的app对象时，可以操作current_app。eg 避免循环导包。一般用来获取程序的各种配置信息。
+  - g：线程内的临时全局对象，用于请求过程中临时存储数据。eg 实现函数间的数据传递。
+- 生命周期：current_app生命周期最长，request和g在请求后会被销毁，session的生命周期根据会话的有效期决定
 
 - 应用场景：当代码没有运行时，我们可以通过手动开启上下文，获取程序相关信息和数据，一般用来测试代码；
 - 手动开启应用上下文：with app.app_context():
