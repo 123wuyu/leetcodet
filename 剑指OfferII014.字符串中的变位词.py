@@ -14,7 +14,7 @@ s1 和 s2 仅包含小写字母
 
 '''
 s1 = "ab"
-s2 = "dbao"
+s2 = "eidbaooo"
 
 
 class Solution:
@@ -28,9 +28,8 @@ class Solution:
             arr1[ord(s1[i]) - ord('a')] += 1
             arr2[ord(s2[i]) - ord('a')] += 1
 
-        for j in range(len(s1), len(s2)): #   range(2,4)
+        for j in range(len(s1), len(s2)): #   range(2,8)
             if arr1 == arr2:
-                print(222222222222222222)
                 print(arr1)
                 print(arr2)
                 return True
