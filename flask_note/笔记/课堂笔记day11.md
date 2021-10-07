@@ -563,9 +563,9 @@ Elasticsearch -> Indices 索引库 -> Types 类型 -> Documents 文档 -> Fields
 * 初始阶段，是将其他数据库的数据导入到es中
     * django  haystack    python manage.py rebuild_index
     * 使用logstash 工具 从mysql中导入数据到es
-* 运行中的阶段， 可以程序中，在保存mysql数据的时候，同时也将数据保存到es中
+* 运行阶段， 在程序中，保存mysql数据的时候，同时也将数据保存到es中
     * django  haystack  配置文件中   haystack_realtime_signal
-    * 自己编写程序，在视图中保存数据库mysql的时候一起也保存到es中
+    * 自己编写程序，在视图中保存数据到mysql数据库的时候也一起保存到es中
 
 #### 11.1 logstash
 
@@ -578,7 +578,7 @@ Elasticsearch -> Indices 索引库 -> Types 类型 -> Documents 文档 -> Fields
 使用
 
 ```
-sudo /usr/share/logstash/bin/logstash -f logstash配置文件
+sudo /usr/share/logstash/bin/logstash -f logstash.conf
 ```
 
 关于配置文件
@@ -601,7 +601,7 @@ input{
          jdbc_page_size => "1000"
          jdbc_default_timezone =>"Asia/Shanghai"
          
-         # logstash 在mysql中执行什么sql语句来读取数据
+         # logstash 在mysql中执行sql语句来读取数据
          statement => "select a.article_id as article_id,a.user_id as user_id, a.title as title, a.status as status, a.create_time as create_time,  b.content as content from news_article_basic as a inner join news_article_content as b on a.article_id=b.article_id"
          
          # 是否是让logstash工具追踪mysql的每条记录中的特定字段
@@ -784,7 +784,7 @@ GET /库名/类型表/_search -d
 
     - filter
 
-        *必须* 匹配，但它以不评分、过滤模式来进行。这些语句对评分没有贡献，只是根据过滤标准来排除或包含文档。
+        *不评分的方式来过滤。这些语句对评分没有贡献，只是根据过滤标准来排除或包含文档。
 
 ```
 # 例子
@@ -842,7 +842,7 @@ curl -X GET 127.0.0.1:9200/articles/article/_search?pretty -d '
 
 * 排序
 
-    * es中默认对于结果使用相关性分数 进行排序
+    * es中默认对结果使用相关性分数 进行排序
 
     * 按照自己的字段排序
 
@@ -867,7 +867,7 @@ curl -X GET 127.0.0.1:9200/articles/article/_search?pretty -d '
 
         * 在定义类型表结构映射的时候，通过设置字段的boost参数，来将匹配这个字段的结果的分数提升，排名靠前
 
-        * 在查询条件中 声明哪个字段的boost加速，提升权重，提升分数
+        * 在查询条件中 声明哪个字段的  boost加权，提升权重，提升分数
 
             ```shell
               curl -X GET 127.0.0.1:9200/articles/article/_search?pretty -d'
