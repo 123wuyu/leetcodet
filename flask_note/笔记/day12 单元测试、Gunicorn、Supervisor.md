@@ -77,7 +77,7 @@ WSGI的服务器 ，可以运行python web框架的程序 （django  flask)
 
 uwsgi + django     gunicorn + django 
 
-gunicorn + flask  uwsgi + flask
+uwsgi + flask       gunicorn + flask  
 
 ### 安装
 
@@ -94,8 +94,8 @@ gunicorn -b 0.0.0.0:8000 -w 4 --access-logfile /home/python/logs/access_app.log 
 -w   workers 进程数量
 --threads 线程数量
 --access-logfile   记录的http请求访问日志文件保存的位置
---error-logfile  gunicorn服务器运行错误时记录的日志文件位置
-toutiao.main:app ->  模块文件:应用程序对象 
+--error-logfile  gunicorn服务器运行时错误日志文件位置
+toutiao.main:app ->  模块文件:应用程序对象app 
 					django   wsgi.py -> application
 --help 查询帮助信息
 ```
@@ -177,7 +177,7 @@ killasgroup=true
 source /home/python/.bash_profile    # 激活 bash 配置文件，使安装的第三方包命令可以使用
 cd /home/python/tbd_42
 workon toutiao
-exec gunicorn -b 0.0.0.0:8000 -w 4 --access-logfile /home/python/logs/access_app.log -        -error-logfile /home/python/logs/error_app.log toutiao.main:app
+exec gunicorn -b 0.0.0.0:8000 -w 4 --access-logfile /home/python/logs/access_app.log --error-logfile /home/python/logs/error_app.log toutiao.main:app
 ```
 
 添加可执行权限

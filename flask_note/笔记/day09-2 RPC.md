@@ -12,10 +12,10 @@ celery：
 
 2.  web找工作 加分项：
 
-*  简历中突出 设计能力
+*  突出 架构设计能力
 * 突出 数据库设计  缓存设计   elasticsearch   即时通讯  rpc
 * python自动化运维  shell编程
-* 前端 js    vue.js 编写
+* 前端 js    vue.js
 
 ## RPC
 
