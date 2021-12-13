@@ -53,15 +53,15 @@
     'photo':xx,
     ...
   }
-  patch表示update，patch修改一个资源，只传相关参数；
+  patch表示update，patch修改一个资源，只传相关参数；好处：节省资源
   {
     'photo':xx,
     ...
   }
   
   请求参数：
-  参数名			参数类型			是否必须			参数说明
-  photo				files				 是				用户上传的头像图片文件
+  参数名			参数类型			是否必须		参数说明
+  photo		  files（文件类型）	 是			   用户上传的头像图片文件
   
   返回结果：
   正常情况下：
@@ -69,11 +69,23 @@
   异常情况下：
   {'message':'token error'},400
   
+  
+  #  使用imghrd.what() 判断是否是图片
+  import imghdr
+  
+  f = open('./666.png', 'rb')
+  imghdr.what(f)  # 返回值 'png'，有值，是图片
+  
+  f = open('test.txt', 'rb')
+  imghdr.what(f)  # 返回空，不是图片
   ~~~
 
   
 
-* 异常处理：IO操作、网络io、磁盘io。
+* 异常处理：需要加 try
+
+  IO操作：网络io、磁盘io。
+
   * 1.类型转换
   * 2.查询数据库，内存型；
   * 3.调用第三方接口。
